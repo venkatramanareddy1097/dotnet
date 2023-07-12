@@ -1,21 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: dotnet
+  name: dotnetdemo
+  namespace: ramana
   labels:
-    app: dotnet
+    app: dotnetdemo
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: dotnet
+      app: dotnetdemo
   template:
     metadata:
       labels:
-        app: dotnet
+        app: dotnetdemo
     spec:
       containers:
-      - name: dotnet
-        image: dotnet-web
+      - name: dotnetdemo
+        image: venkatramanareddy1097/dotnetdemo
         ports:
-        - containerPort: 80
+        - containerPort: 5000
