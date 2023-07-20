@@ -25,6 +25,8 @@ spec:
         image: venkatramanareddy1097/dotnetdemo
         ports:
         - containerPort: 5000
+        imagePullSecrets:
+      - name: samsung
         resources:
           requests:
             cpu: 100m
