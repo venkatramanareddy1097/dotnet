@@ -43,9 +43,12 @@ spec:
           failureThreshold: 3
           periodSeconds: 10
         readinessProbe:
-          httpget:
-            path: /_status
-            port: 80
+          env:
+          - name: DB_host
+            valueFrom:
+              configMapKeyRef:
+                name: dotnetdemo
+                key: storageconnectionstring
           initialDelaySeconds: 5
           timeoutSeconds: 2
           successThreshold: 1
