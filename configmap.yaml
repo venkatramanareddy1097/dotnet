@@ -4,4 +4,4 @@ metadata:
   name: CM
   namespace: default
 data:
-  key: DB_HOST
+  storageconnectionstring: default
