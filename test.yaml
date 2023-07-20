@@ -30,23 +30,22 @@ spec:
         resources:
           requests:
             cpu: 100m
-            memory: 300Mi
+            memory: 100Mi
           limits:
-            cpu: 200m
-            memory: 300Mi
+            cpu: 100m
+            memory: 100Mi
         livenessProbe:
-          exec:
-            command:
-            - ls
+         tcpSocket:
+           port: 80
           initialDelaySeconds: 5
           timeoutSeconds: 5
           successThreshold: 1
           failureThreshold: 3
           periodSeconds: 10
         readinessProbe:
-          exec:
-            command:
-            - ls
+          httpget:
+            path: /_status
+            port: 80
           initialDelaySeconds: 5
           timeoutSeconds: 2
           successThreshold: 1
@@ -54,6 +53,6 @@ spec:
           periodSeconds: 10
         ports:
         - containerPort: 80
-          name: walmartdev
+          name: dotnetdemo
         imagePullPolicy: Always
       restartPolicy: Always
