@@ -44,9 +44,30 @@ stages:
     - upload: manifests
       artifact: manifests
 
-- stage: Deploy
-  displayName: Deploy stage
+- stage: Deploytodev
+  displayName: Deploy to dev
   dependsOn: Build
+
+  jobs:
+  - deployment: Deploy
+    displayName: Deploy
+    pool:
+      vmImage: $(vmImageName)
+    environment: 'venkatramanareddy1097dotnetdemo.reddy'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: KubernetesManifest@0
+            displayName: Create imagePullSecret
+            inputs:
+              action: createSecret
+              secretName: $(imagePullSecret)
+              dockerRegistryEndpoint: $(dockerRegistryServiceConnection)
+
+- stage: Deploytoprod
+  displayName: Deploy to prod
+  dependsOn: Deploytodev
 
   jobs:
   - deployment: Deploy
