@@ -84,4 +84,4 @@ stages:
               connectionType: 'Azure Resource Manager'
               command: 'upgrade'
               chartType: 'Name'
-              chartName: 'dotnet'
+              chartName: 'repo_name/path_to_chart'
