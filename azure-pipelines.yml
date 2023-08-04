@@ -83,5 +83,5 @@ stages:
               kubernetesCluster: 'venkat'
               connectionType: 'Azure Resource Manager'
               command: 'upgrade'
-              chartType: 'Name'
-              chartName: 'repo_name/path_to_chart'
+              chartType: 'FilePath'
+              chartPath: '/Users/venkatramanareddy/Desktop/git/dotnet/dotnethelm'
