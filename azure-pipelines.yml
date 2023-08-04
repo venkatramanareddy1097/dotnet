@@ -1,3 +1,4 @@
+
 # Deploy to Azure Kubernetes Service
 # Build and push image to Azure Container Registry; Deploy to Azure Kubernetes Service
 # https://docs.microsoft.com/azure/devops/pipelines/languages/docker
@@ -44,9 +45,30 @@ stages:
     - upload: manifests
       artifact: manifests
 
-- stage: Deploy
-  displayName: Deploy stage
+- stage: Deploytodev
+  displayName: Deploy to dev
   dependsOn: Build
+
+  jobs:
+  - deployment: Deploy
+    displayName: Deploy
+    pool:
+      vmImage: $(vmImageName)
+    environment: 'venkatramanareddy1097dotnetdemo.reddy'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: KubernetesManifest@0
+            displayName: Create imagePullSecret
+            inputs:
+              action: createSecret
+              secretName: $(imagePullSecret)
+              dockerRegistryEndpoint: $(dockerRegistryServiceConnection)
+
+- stage: Deploytoprod
+  displayName: Deploy to prod
+  dependsOn: Deploytodev
 
   jobs:
   - deployment: Deploy
@@ -76,12 +98,3 @@ stages:
                 $(imagePullSecret)
               containers: |
                 $(containerRegistry)/$(imageRepository):$(tag)
-          - task: HelmDeploy@0
-            inputs:
-              azureSubscription: 'Free Trial(c5e8d554-c7cf-4a3e-874a-a7564548f0d5)'
-              azureResourceGroup: 'venkat'
-              kubernetesCluster: 'venkat'
-              connectionType: 'Azure Resource Manager'
-              command: 'upgrade'
-              chartType: 'FilePath'
-              chartPath: '/Users/venkatramanareddy/Desktop/git/dotnet/dotnethelm/Chart.yaml'
