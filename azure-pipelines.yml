@@ -84,4 +84,4 @@ stages:
               connectionType: 'Azure Resource Manager'
               command: 'upgrade'
               chartType: 'FilePath'
-              chartPath: '/Users/venkatramanareddy/Desktop/git/dotnet/dotnethelm'
+              chartPath: '/Users/venkatramanareddy/Desktop/git/dotnet/dotnethelm/Chart.yaml'
